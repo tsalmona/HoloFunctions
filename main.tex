@@ -1,0 +1,308 @@
+\documentclass[5pt,a4paper]{article}
+\usepackage[left=1.75cm,right=1.75cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath, amsfonts, dsfont, stmaryrd, setspace, graphicx, subcaption, float, titlesec}
+
+%Configuration de l'affichage des liens
+%\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks, colorlinks=false, urlcolor=blue]{hyperref}
+
+
+\title{Fonctions holomorphes }
+\raggedright
+\date{}
+\onehalfspacing
+
+% Définition des compteurs et réinitialisation à chaque nouvelle section
+\newcounter{propcounter}[subsection]
+\newcounter{defcounter}[subsection]
+\newcounter{thmcounter}[subsection]
+
+\renewcommand{\thepropcounter}{\thesubsection.\arabic{propcounter}}
+\renewcommand{\thedefcounter}{\thesubsection.\arabic{defcounter}}
+\renewcommand{\thethmcounter}{\thesubsection.\arabic{thmcounter}}
+
+% Définition des commandes
+\newcommand{\prop}[1]{
+    \stepcounter{propcounter}
+    \hypertarget{p:\thepropcounter}{}%
+    \noindent\textbf{Proposition \thepropcounter ~:} #1 \newline
+}
+\newcommand{\propEnum}[1]{
+    \stepcounter{propcounter}
+    \hypertarget{p:\thepropcounter}{}%
+    \noindent\textbf{Proposition \thepropcounter ~:} #1
+}
+\newcommand{\defin}[1]{
+    \stepcounter{defcounter}
+    \hypertarget{d:\thedefcounter}{}%
+    \noindent\textbf{Définition \thedefcounter ~:} #1 \newline
+}
+\newcommand{\definEnum}[1]{
+    \stepcounter{defcounter}
+    \hypertarget{d:\thedefcounter}{}%
+    \noindent\textbf{Définition \thedefcounter ~:} #1
+}
+\newcommand{\thm}[1]{
+    \stepcounter{thmcounter}
+    \hypertarget{t:\thethmcounter}{}%
+    \noindent\textbf{Théorème \thethmcounter ~:} #1 \newline
+}
+\newcommand{\thmEnum}[1]{
+    \stepcounter{thmcounter}
+    \hypertarget{t:\thethmcounter}{}%
+    \noindent\textbf{Théorème \thethmcounter ~:} #1
+}
+\newcommand{\demo}[1]{
+    \textbf{Démonstration :~} #1 \newline
+}
+\newcommand{\demoEnum}[1]{
+    \textbf{Démonstration :~} #1
+}
+\newcommand{\rmq}[1]{
+    \textbf{Remarque :~} #1 \newline
+}
+\newcommand{\ex}[1]{
+    \textbf{Exemple :~} #1 \newline
+}
+
+\renewcommand*\contentsname{Table des matières}
+
+\begin{document}
+\maketitle
+\begin{onehalfspacing}
+
+\tableofcontents
+
+
+\newpage
+\section{Définitions et propriétés élémentaires}
+
+On identifie $\mathbb{C}$ à $\mathbb{R}^2$ par l'isomorphisme naturel de $\mathbb{R}$-espace vectoriel $\iota : x + iy \mapsto (x, y)$. Si $\mathcal{U}$ est un ouvert de $\mathbb{C}$, l'ensemble $\iota(\mathcal{U})$ est un ouvert de $\mathbb{R}^2$ que l'on notera $\Tilde{\mathcal{U}}$. Si $f$ est une application de $\mathbb{C} \rightarrow \mathbb{C}$, on notera $P_f$ (resp. $Q_f$) l'application $(x, y) \mapsto \textup{Re}(f(x + iy))$ (resp. $(x, y) \mapsto \textup{Im}(f(x + iy))$) et $\Tilde{f}$ l'application $(x, y) \mapsto (P_f(x, y),~ Q_f(x, y))$. Ainsi, pour tout $z = x + iy \in \mathbb{C},~ f(z) = P_f(x, y) + i Q_f(x, y)$.\newline
+
+\defin{Soient $\mathcal{U}$ un ouvert de $\mathbb{C}$ et $f : \mathcal{U} \rightarrow \mathbb{C}$. Soit $z_0 \in \mathcal{U}$. $f$ est $\mathbb{C}$\textbf{-dérivable} en $z_0$ s'il existe $\alpha \in \mathbb{C}$ tel que 
+\[ \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h} = \alpha\]
+}
+
+\defin{$f : \mathcal{U} \rightarrow \mathbb{C}$ est \textbf{holomorphe} sur $\mathcal{U}$ si elle est $\mathbb{C}$-dérivable en tout point de $\mathcal{U}$. On note $f' : \mathcal{U} \rightarrow \mathbb{C}$ la fonction dérivée.}
+
+\thm{\textit{(Admis)} Si $f : \mathcal{U} \rightarrow \mathbb{C}$ est holomorphe, alors $f'$ est continue.}
+
+\rmq{$f$ est holomorphe sur $\mathcal{U}$ si et seulement si elle admet un \textbf{développement limité} à l'ordre $1$ en tout point de $\mathcal{U}$ : 
+\[ \forall x \in \mathcal{U},~ f(x + h) = f(x) + f'(x)h + o(h) \]
+Il est alors clair que $f$ est continue sur $\mathcal{U}$.
+}
+
+\prop{\textit{(Équations de Cauchy-Riemann)} Soit $f : \mathcal{U} \rightarrow \mathbb{C}$. Alors $f$ est $\mathbb{C}$-dérivable en $z_0 = x_0 + iy_0$ si et seulement si $P_f$ et $Q_f$ sont différentiables en $(x_0, y_0)$ et 
+
+\[
+    \left\{\begin{aligned}
+        \frac{\partial P_f}{\partial x}(x_0, y_0) = \frac{\partial Q_f}{\partial y}(x_0, y_0) \\
+        \frac{\partial P_f}{\partial y}(x_0, y_0) = \frac{-\partial Q_f}{\partial x}(x_0, y_0)
+    \end{aligned}\right.
+\]
+}
+\demo{On suppose d'abord que $f$ est $\mathbb{C}$-dérivable en $z_0$ et on note $f'(z_0) = \alpha = a + ib$. Alors, 
+
+\begin{align*}
+    f(z_0 + h) &= f(z_0) + \alpha \times h + o(h) \\
+    f(z_0 + h) &= f(z_0) + (a + ib) \times (h_x + ih_y) + o(h) \\
+    f(z_0 + h) &= f(z_0) + (ah_x - bh_y) + i(ah_y + bh_x) + o(h)
+\end{align*}
+
+donc, 
+\[
+    \tilde{f}(x_0 + h_x,~ y_0 + h_y) = \tilde{f}(x_0,~ y_0) + (ah_x - bh_y,~ ah_y + bh_x) + o(h_x, h_y)
+\]
+que l'on peut ré-écrire 
+\[
+    \tilde{f}(x_0 + h_x,~ y_0 + h_y) = \tilde{f}(x_0,~ y_0) + 
+        \begin{pmatrix}
+            a & -b \\
+            b & a
+        \end{pmatrix}
+        \begin{pmatrix}
+            h_x \\
+            h_y
+        \end{pmatrix}
+    + o(h_x, h_y)
+\]
+On en déduit que $\tilde{f} = (P_f, Q_f)$ est différentiable en $(x_0, y_0)$ et que sa jacobienne est la matrice 
+\[
+ \textup{Jac}_{(x_0, y_0)} \tilde{f} := 
+    \begin{pmatrix}
+        \frac{\partial P_f}{\partial x}(x_0, y_0) & \frac{\partial P_f}{\partial y}(x_0, y_0) \\
+        \frac{\partial Q_f}{\partial x}(x_0, y_0) & \frac{\partial Q_f}{\partial y}(x_0, y_0)
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        a & -b \\
+        b & a
+    \end{pmatrix}
+\]
+Réciproquement, on suppose que $P_f$ et $Q_f$ sont différentiables en $(x_0, y_0)$ et que
+\[
+    \left\{\begin{aligned}
+        a := \frac{\partial P_f}{\partial x}(x_0, y_0) = \frac{\partial Q_f}{\partial y}(x_0, y_0) \\
+        b := \frac{\partial P_f}{\partial y}(x_0, y_0) = \frac{-\partial Q_f}{\partial x}(x_0, y_0)
+    \end{aligned}\right.
+\]
+Alors $\tilde{f}$ est différentiable en $(x_0, z_0)$ et 
+\[  
+    \textup{Jac}_{(x_0, y_0)} \tilde{f}
+    =
+    \begin{pmatrix}
+        a & -b \\
+        b & a
+    \end{pmatrix}
+\]
+donc on retrouve le fait que $f$ est $\mathbb{C}$-dérivable en $z_0$ en écrivant un développement limité à l'ordre 1 en $(x_0, y_0)$ de $\tilde{f}$.
+}
+
+\rmq{On a de plus $f'(x_0 + iy_0) = \frac{\partial P_f}{\partial x}(x_0, y_0) - i \frac{\partial P_f}{\partial y}(x_0, y_0)$.}
+
+\ex{La conjugaison complexe ($f : z \mapsto \Bar{z}$) n'est $\mathbb{C}$-dérivable en aucun point de $\mathbb{C}$. En effet, les fonctions $P_f(x, y) = x$ et $Q_f(x, y) = -y$ ne vérifient pas les équations de Cauchy-Riemann.}
+
+\rmq{Les équations de Cauchy-Riemann peuvent être reformulées autrement : $f$ est $\mathbb{C}$-dérivable en $z_0 = x_0 + iy_0$ si et seulement si $\tilde{f}$ est différentiable en $(x_0, y_0)$ et sa différentielle est $\mathbb{C}$-linéaire.}
+
+\propEnum{Soit $\mathcal{U}$ un ouvert de $\mathbb{C}$. On note $\mathcal{H}(\mathcal{U})$ l'ensemble des fonctions holomorphes sur $\mathcal{U}$. Alors,
+\begin{enumerate}
+    \item $\mathcal{H}(\mathcal{U})$ est un $\mathbb{C}$-espace vectoriel.
+    \item Si $f, g \in \mathcal{H}(\mathcal{U})$, alors $fg \in \mathcal{H}(\mathcal{U})$ et $(fg)' = f'g + fg'$.
+    \item Si $f \in \mathcal{H}(\mathcal{U})$ et si $f$ ne s'annule pas sur $\mathcal{U}$, alors $\frac{1}{f} \in \mathcal{H}(\mathcal{U})$ et $(\frac{1}{f})' = \frac{-f'}{f^2}$.
+    \item Si $f : \mathcal{U} \rightarrow \mathbb{C}$ et $g : \mathcal{V} \rightarrow \mathbb{C}$ sont holomorphes et que $f(\mathcal{U}) \subset \mathcal{V}$, alors $g \circ f \in \mathcal{H}(\mathcal{U})$ et $(g \circ f)' = f' \times (g' \circ f)$.
+\end{enumerate}
+}
+\demo{Même preuve que pour les fonctions dérivables sur un ouvert de $\mathbb{R}$.}
+
+\ex{Les polynômes sont holomorphes sur $\mathbb{C}$, les fractions rationnelles sont holomorphes sur tout $\mathbb{C}$ sauf sur leurs pôles.}
+
+\thm{\textit{(Théorème des accroissements finis)} Soit $E$ un espace vectoriel normé, $\mathcal{U}$ un ouvert connexe de $E$ et $f : \mathcal{U} \rightarrow \mathbb{R}$ une fonction différentiable. Alors pour tout $a, b \in \mathcal{U}$, il existe $c \in [a, b]$ tel que 
+\[ f(a) - f(b) = D_cf(b-a) \]
+}
+
+\thm{\textit{(Inégalité des accroissements finis)} Soient $E, F$ deux espaces vectoriels normés, $\mathcal{U}$ un ouvert convexe de $E$ et $f : \mathcal{U} \subset E \rightarrow F$ un fonction différentiable. Soient $a, b \in \mathcal{U}$. Alors,
+\[ \lVert f(a) - f(b) \rVert \leq \textup{sup}_{x \in [a, b]} \lVert D_xf \rVert \cdot \lVert (b-a) \rVert \]
+}
+
+\thm{(Rappel) Soit $\mathcal{U}$ un ouvert de $\mathbb{R}^2$ et $f : \mathcal{U} \rightarrow \mathbb{R}^m$. Si $f$ admet des dérivées partielles sur $\mathcal{U}$ et si elles sont \textbf{continues} en un point $a \in \mathcal{U}$, alors $f$ est différentiable en $a$ et $D_af (h_1, h_2) = h_1 \cdot \frac{\partial f}{\partial x}(a) + h_2 \cdot \frac{\partial f}{\partial y}(a)$.}
+\demo{On note $a = (a_1, a_2)$, $D(h = (h_1, h_2)) = h_1 \cdot \frac{\partial f}{\partial x}(a) + h_2 \cdot \frac{\partial f}{\partial y}(a)$ et $u(h) = f(a + h) - f(a) - D(h)$ et on va montrer que $u(h) = o(h)$. \\
+Soit $\varepsilon > 0$. Les dérivées partielles de $f$ sont continues donc il existe $\delta > 0$ tel que pour tout $z \in \textup{B}(0, \delta)$,
+\[ \lVert \frac{\partial f}{\partial x~ (\textup{resp. }\partial y)}(a + z) - \frac{\partial f}{\partial x~ (\textup{resp. }\partial y)}(a)\rVert \leq \varepsilon \]
+
+Soit $(h_1, h_2) \in B(0, \delta)$. On écrit
+\begin{align*}
+    u(h_1, h2) &= f(a_1 +h_1, a_2 + h_2) - f(a_1, a_2) - h_1 \cdot \frac{\partial f}{\partial x}(a) - h_2 \cdot \frac{\partial f}{\partial y}(a) \\
+    &= \left[ f(a_1 + h_1, a_2 + h_2) - f(a_1, a_2 + h_2) - h_1 \cdot \frac{\partial f}{\partial x}(a) \right]
+    + \left[ f(a_1, a_2 + h_2) - f(a_1, a_2) - h_2 \cdot \frac{\partial f}{\partial y}(a) \right] ~\textup{\textbf{(1)}}
+\end{align*}
+et on pose 
+\begin{align*}
+    v(t) &= f(a_1 + t, a_2 + h_2) - f(a_1, h_2 + h_2) - t \cdot \frac{\partial f}{\partial x}(a) \\
+    w(t) &= f(a_1, a_2 + t) - f(a_1, a_2) - t \cdot \frac{\partial f}{\partial y}(a)
+\end{align*}
+$v$ est dérivable sur $[0, h_1]$ et pour tout $t \in [0, h_1],~ v'(t) = \frac{\partial f}{\partial x}(a_1 + t, a_2 + h_2) - \frac{\partial f}{\partial x}(a)$ donc $\lVert v'(t) \rVert \leq \varepsilon$. De même, pour tout $t \in h_2,~ \lVert w'(t) \rVert \leq \varepsilon$. On déduit de l'inégalité des accroissements finis que $\lVert v(h_1) \rVert \leq |h_1|\varepsilon$ et $\lVert w(h_2) \rVert \leq |h_2|\varepsilon$. En utilisant l'expression \textbf{(1)} puis l'inégalité triangulaire, on trouve 
+\[ \lVert u(h_1, h_2) \rVert \leq |h_1|\varepsilon + |h_2|\varepsilon \leq 2\varepsilon \cdot \lVert h \rVert_{\infty} \]
+ce qui permet de conclure.  
+}
+
+\prop{Soient $\mathcal{U} \subset \mathbb{C}$ un ouvert \textbf{convexe} et $f : \mathcal{U} \rightarrow \mathbb{C}$ holomorphe. $f$ est constante sur $\mathcal{U}$ si et seulement si $f' = 0$.}
+\demo{Si $f$ est constante, on écrit le taux d’accroissement et on a bien $f' = 0$.\\
+Supposons maintenant que $f' = 0$. Alors, les applications $\frac{\partial P_f}{\partial x}$ et $\frac{\partial P_f}{\partial y}$ sont nulles, et donc continues. Comme $f$ est holomorphes, on en déduit que les dérivées partielles de $Q_f$ sont aussi nulles. Selon le théorème (\textbf{1.0.3}), $P_f$ et $Q_f$ sont différentiables et leurs différentielles sont nulles. En appliquant le théorème des accroissements finis sur $\Tilde{U}$, on trouve que $P_f$ et $Q_f$ y sont constantes, et donc que $f$ est constante sur $\mathcal{U}$.}
+
+
+\newpage
+\section{Rappels sur les séries entières}
+
+\defin{Soit $\sum a_nz^n$ une série entière. \\
+Le \textbf{rayon de convergence} de $\sum a_nz^n$ est $\textup{sup}(\{~ t \geq 0,~ |a_nt^n| \textup{ est bornée}~ \})$ et est noté $R_a$.}
+
+\prop{Soit $\sum a_nz^n$ une série entière. Soit $z \in \mathbb{C}$. Si $|z| < R_a$, alors la série $\sum a_nz^n$ est absolument convergente. Si $|z| > R_a$, alors la série $\sum a_nz^n$ diverge. Si $|z| = R_a$, la série peut converger ou diverger.}
+
+\prop{\textit{(Règle de d'Alembert)} Soit $\sum a_nz^n$ une série entière telle que la suite $(a_n)$ est non nulle à partir d'un certain rang. On suppose de la suite $\frac{|a_{n+1}|}{|a_n|}$ converge vers $l \in \overline{\mathbb{R}}$. Alors $R_a = 1/l$, avec les conventions $1/0 = +\infty$ et $\frac{1}{+\infty} = 0$.}
+
+\prop{\textit{(Règle de Cauchy)} Soit $\sum a_nz^n$ une série entière. Si $|a_n|^{1/n}$ converge vers $l \in \overline{\mathbb{R}}$, alors $R_a = 1/l$ (avec les mêmes conventions que précédemment).}
+
+\prop{\textit{(Règle de Cauchy améliorée)} Soit $\sum a_nz^n$ une série entière. Alors $1/R_a = \textup{limsup }a_n^{1/n}$.}
+
+\defin{Soit $\sum a_nz^n$ une série entière. La \textbf{série dérivée} de $\sum a_nz^n$ est la série $\sum (n+1)a_{n+1}z^n$. Son rayon de convergence est noté $R_a'$.}
+
+\prop{Soit $\sum a_nz^n$ une série entière. Alors, $R_a = R_a'$.}
+\demo{Supposons que $R_a < R_a'$. Soit $z_0 \in \mathbb{C}$ tel que $R_a < |z_0| < R_a'$. Alors, 
+\[ |a_{n+1}z_0^{n+1}| \leq (n+1)|a_{n+1}z_0^n||z_0|\]
+La suite de droite est bornée donc celle de gauche aussi, ce qui est absurde. 
+Supposons maintenant que $R_a' < R_a$. Soient $z_0 \in \mathbb{C}$ et $l > 0$ tels que $R_a' < |z_0| < l < R_a$. On note $M > 0$ un majorant de la suite $|a_nt^n|$. Alors, 
+\[ |(n+1)a_{n+1}z_0^{n+1}| = (n+1)|a_{n+1}l^{n+1}|(z_0/l)^{n+1} \leq (n+1)M(z_0/l)^{n+1}\]
+Par croissances comparées, on sait que la série des $(n+1)M(z_0/l)^{n+1}$ converge, donc celle des $|(n+1)a_{n+1}z^n|$ aussi, ce qui est absurde.
+}
+
+
+\newpage
+\section{Fonctions analytiques}
+
+\prop{Soit $\sum a_nz^n$ une série entière. On note $f : B(0, R_a) \rightarrow \mathbb{C},~ z \mapsto \sum_{n=0}^{+\infty} a_nz^n$. $f$ est holomorphe sur $B(0, R_a)$ et pour tout $z \in B(0, R_a)$, $f'(z) = \sum_{n=0}^{+\infty} (n+1)a_{n+1}z^n$.}
+\demo{Soit $z \in B(0, R_a)$ et $r > 0$ tel que $|z| < r < R_a$. Pour tout $h \in \mathbb{C}$ tel que $|z| + |h| < r$, 
+\begin{align*} 
+    \frac{f(z + h) - f(z)}{h} - \sum_{n = 0}^{+\infty} (n+1)a_{n+1}z^n 
+    &= \frac{1}{h} \sum_{n = 0}^{+\infty} a_n \left[ (z + h)^n - z^n \right] - \sum_{n = 0}^{+\infty} (n+1)a_{n+1}z^n \\
+    &= \sum_{n=1}^{+\infty} a_n \left[ \frac{(z+h)^n - z^n}{h} - nz^{n-1} \right]
+\end{align*}
+Pour tout $n \geq 1$, on pose 
+\[ v_n(h) = \frac{(z+h)^n - z^n}{h} - nz^{n-1} \]
+Il est clair que $\lim_{h \to 0}~ v_n(h) = 0$. De plus,
+\begin{align*}
+    |v_n(h)| &= |\frac{(z+h)^n - z^n}{h} - nz^{n-1}| \\
+    &= |\sum_{k=0}^{n-1} (z+h)^kz^{n-k} - nz^{n-1}| \\
+    &\leq \sum_{k = 0}^{n-1} |z+h|^k|z|^{n-k} + n|z|^{n-1} \\
+    &\leq 2nr^{n-1}
+\end{align*}
+car $|z| \leq |z| + |h| < r$. On en déduit que la série $\sum a_nv_n(h)$ est converge normalement. On peut donc passer à la limite dans la série :
+\begin{align*} 
+    \lim_{h \to 0}~ \sum_{n=1}^{+\infty} a_n \left[ \frac{(z+h)^n - z^n}{h} - nz^{n-1} \right] 
+    &= \sum_{n=1}^{+\infty} a_n \cdot \lim_{h \to 0}~ \left[ \frac{(z+h)^n - z^n}{h} - nz^{n-1} \right] \\
+    &= 0
+\end{align*}
+}
+
+\rmq{On en déduit que $f$ est infiniment $\mathbb{C}$-dérivable sur $B(0, R_a)$ et que pour tout $n \in \mathbb{N}$, $a_n = f^{(n)}(0)/n!$. On peut alors écrire le \textbf{développement en série de Taylor en 0} de $f$ : 
+\[ f(z) = \sum_{n=0}^{+\infty} \frac{f^{(n)}(0)}{n!}z^n \]
+}
+
+\defin{Soit $\mathcal{U}$ un ouvert de $\mathbb{C}$. Une fonction $f : \mathcal{U} \rightarrow \mathbb{C}$ est \textbf{analytique} lorsque pour tout $z_0 \in \mathcal{U}$, il existe $B(z_0, R) \subset \mathcal{U}$ et une série entière $\sum a_nz^n$ telle que $R \leq R_a$ et $f(z) = \sum_{n=0}^{+\infty}(z - z_0)^n$ pour tout $z \in B(0, R)$.}
+
+\prop{Soit $f : \mathcal{U} \rightarrow \mathbb{C}$ analytique. Alors $f$ est holomorphe sur $\mathcal{U}$ et admet des dérivées de tous ordres qui sont toutes holomorphes. }
+\demo{En effet, si $z_0 \in \mathcal{U}$, il existe une série entière $\sum a_nz^n$ telle que pour tout $z \in B(0, R_a) \cap \mathcal{U}$,
+\begin{align*} 
+    f(z) &= \sum_{n=0}^{+\infty}a_n(z - z_0)^n \\
+    &= \left[ (h \mapsto \sum_{z=0}^{+\infty}a_nh^n) \circ (u \mapsto u - z_0) \right](z)
+\end{align*}
+Ces deux fonctions sont holomorphes donc leur composition l'est aussi.
+}
+
+\prop{Soit $\sum a_nz^n$ une série entière. Alors la fonction $f : B(0, R_a) \rightarrow \mathbb{C}$ associée à cette série est analytique.}
+\demo{Soit $z_0 \in B(0, R_a)$. On veut montrer qu'il existe une série entière $\sum b_nz^n$ telle que pour tout $z \in B(z_0, R_b) \cap B(0, R_a)$, on ait
+\[ f(z) = \sum b_n(z - z_0)^n\]
+Soit $p \in \mathbb{N}$. 
+\begin{align*}
+    f^{(p)}(z_0) &= \sum_{n = p}^{+\infty} n(n-1)...(n-p+1)a_nz_0^{n-p} \\
+    &= \sum_{n = p}^{+\infty} \frac{n!}{(n-p)!}a_nz_0^{n-p} \\
+    &= \sum_{q=0}^{+\infty} \frac{(p+q)!}{q!}a_{p+q}z_0^q ~~(\textup{changement de variable } q = n - p) \\
+    &= \sum_{q=0}^{+\infty} p!\binom{p+q}{q}a_{p+q}z_0^q
+\end{align*}
+On en déduit que la série entière $\sum (f^{(p)}(z_0)/p!) z^n$ a un rayon de convergence supérieur à $R_a - |z_0|$. En effet, si $r < R_a - |z_0|$, alors 
+\begin{align*}
+    |\frac{f^{(p)}(z_0)}{p!}r^p| &\leq \sum_{q=0}^{+\infty}\binom{p+q}{q}|a_{p+q}| \cdot |z_0|^qr^p \\
+    &\leq \sum_{n=p}^{+\infty}\binom{n}{n-p}|a_{n}| \cdot \textup{max}(|z_0|, r)^n ~~(\textup{changement de variable } n = p + q)\\
+    &< +\infty
+\end{align*}
+car $\textup{max}(|z_0|, r) < R_a$. Soit $z \in \mathbb{C}$ tel que $|z - z_0| < R_a - |z_0|$. Alors,
+\begin{align*}
+    \sum_{p=0}^{+\infty} \frac{f^{(p)}(z_0)}{p!}(z - z_0)^n &= \sum_{p = 0}^{+\infty} \sum_{q = 0}^{+\infty} \binom{p+q}{q}a_{p+q}z_0^q(z-z_0)^p \\
+    &= \sum_{n=0}^{+\infty} a_n \sum_{p+q=n} \binom{n}{q}z_0^q(z-z_0)^{n-q} ~~\textup{\textbf{(1)}} \\
+    &= \sum_{n=0}^{+\infty} a_n z^n \\
+    &= f(z)
+\end{align*}
+\textbf{(1)} vient du fait que la série est absolument convergente donc on peut la réordonner comme on veut : $\mathbb{N}^2 = \cup_{n = 0}^{+\infty}~ \{(p,q) \in \mathbb{N}^2,~ p+q=n\}$
+}
+
+\end{onehalfspacing}
+\end{document}
